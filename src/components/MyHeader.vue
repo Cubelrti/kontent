@@ -14,15 +14,15 @@
       </div>
   
       <div class="navbar-end">
-                <a class="navbar-item" href="">
+        <router-link to="/" class="navbar-item">
           Landing
-        </a>
-        <a class="navbar-item" href="">
+        </router-link>
+        <router-link to="/list" class="navbar-item">
           List
-        </a>
-        <a class="navbar-item" href="">
+        </router-link>
+        <router-link to="/compose" class="navbar-item">
           Compose
-        </a>
+        </router-link>
         <div class="navbar-item">
             <p class="control">
               <router-link to="/signin" class="button is-primary is-inverted">

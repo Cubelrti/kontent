@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Landing from '@/components/Landing'
 import Signin from '@/components/Signin'
+import List from '@/components/ArticleList'
+import Composer from '@/components/Composer'
 
 Vue.use(Router)
 
@@ -16,6 +18,16 @@ export default new Router({
       path: '/signin',
       name: 'Signin',
       component: Signin
+    },
+    {
+      path: "/list",
+      name: 'List',
+      component: List
+    },
+    {
+      path: "/compose",
+      name: "Composer",
+      component: Composer
     }
   ],
   mode: 'history'
