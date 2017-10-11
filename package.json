@@ -16,6 +16,7 @@
     "font-awesome": "^4.7.0",
     "fontawesome": "^4.7.2",
     "lodash": "^4.17.4",
+    "lowdb": "^1.0.0",
     "marked": "^0.3.6",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",

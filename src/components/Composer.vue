@@ -1,22 +1,31 @@
 <template>
   <section class="hero is-large">
-<div id="toolbar">
-
-</div>
+    <div id="toolbar">
+        <button class="button field is-success">
+          <b-icon icon="floppy-o"></b-icon>
+          <span>Save Changes</span>
+        </button>
+        <button class="button field is-danger">
+          <b-icon icon="times"></b-icon>
+          <span>Dismiss Changes</span>
+        </button>
+    </div>
     <div id="editor">
-      
-      <textarea :value="input" @input="update"/>
-      <div v-html="compiledMarkdown" class="content"></div>
+      <textarea :value="input" @input="update" />
+      <article-show :article="input"></article-show>
     </div>
   </section>
 </template>
 
 <script>
 import debounce from 'lodash'
-import marked from 'marked'
 import Vue from 'vue'
+import ArticleShow from '@/components/ArticleShow'
 
 export default {
+  components: {
+    ArticleShow
+  },
   data() {
     return {
       input: `# This is an &lt;h1&gt; tag
@@ -85,13 +94,8 @@ When you do want to insert a <br /> break tag using Markdown, you end a line wit
 Yes, this takes a tad more effort to create a <br />, but a simplistic “every line break is a <br />” rule wouldn’t work for Markdown. Markdown’s email-style blockquoting and multi-paragraph list items work best — and look better — when you format them with hard breaks.`
     }
   },
-  computed: {
-    compiledMarkdown: function () {
-      return marked(this.input, { sanitize: true })
-    }
-  },
   methods: {
-    update: _.debounce(function (e) {
+    update: _.debounce(function(e) {
       this.input = e.target.value
     }, 300)
   }
@@ -99,13 +103,16 @@ Yes, this takes a tad more effort to create a <br />, but a simplistic “every 
 </script>
 
 <style scoped>
-html, body, #editor {
-  height: 100vh;
+html,
+body,
+#editor {
+  height: 80vh;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   color: #333;
 }
 
-textarea, #editor div {
+textarea,
+#editor div {
   display: inline-block;
   width: 49%;
   height: 100%;
@@ -128,5 +135,9 @@ textarea {
 
 code {
   color: #f66;
+}
+
+#toolbar{
+  padding:20px;
 }
 </style>

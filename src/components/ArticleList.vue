@@ -25,7 +25,7 @@
             </div>
 
             <div class="column">
-                <div v-html="compiledMarkdown" class="content"></div>
+                <article-show :article="this.selected.content"></article-show>
             </div>
         </div>
     </section>
@@ -33,14 +33,17 @@
 
 <script>
 import debounce from 'lodash'
-import marked from 'marked'
+import ArticleShow from '@/components/ArticleShow'
 export default {
+    components: {
+        ArticleShow
+    },
     data() {
         const noData = {
             'content': '# Select an article to continue.'
         }
         const tableDataSimple = [
-            { 'title': 'Sample Article 1', 'date': '2017-9-23 17:14:11', 'content': '## test1 \n test 2' },
+            { 'title': 'Sample Article 1', 'date': '2017-9-23 17:14:11', 'content': '## test1 \n test 2 fun' },
             { 'title': 'Sample Article 2', 'date': '2017-9-23 13:14:11', 'content': '## test2 ' },
             { 'title': 'Sample Article 3', 'date': '2017-9-13 17:14:11', 'content': '## test3 \n test 3' },
         ]
@@ -49,11 +52,6 @@ export default {
             tableDataSimple,
             selected: tableDataSimple[1],
             noData
-        }
-    },
-    computed: {
-        compiledMarkdown: function() {
-            return marked(this.selected.content, { sanitize: true })
         }
     },
 }
