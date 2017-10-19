@@ -14,6 +14,11 @@ var webpackConfig = (process.env.NODE_ENV === 'testing' || process.env.NODE_ENV 
   ? require('./webpack.prod.conf')
   : require('./webpack.dev.conf')
 
+
+/**************** API Server ******************/
+var articleArchiver = require("../src/api/article-archiver")
+var bodyParser = require('body-parser');
+
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
 // automatically open browser, if not set will be false
@@ -64,6 +69,10 @@ app.use(hotMiddleware)
 // serve pure static assets
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
+
+// serve kontent apis
+app.use(bodyParser.json());
+app.post('/article', articleArchiver())
 
 var uri = 'http://localhost:' + port
 
