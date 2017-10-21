@@ -12,7 +12,10 @@
     "test": "npm run unit"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "buefy": "^0.5.2",
+    "cookie-parser": "^1.4.3",
+    "express-session": "^1.15.6",
     "font-awesome": "^4.7.0",
     "fontawesome": "^4.7.2",
     "lodash": "^4.17.4",

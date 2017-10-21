@@ -1,18 +1,42 @@
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
 
-const adapter = new FileSync('db.json')
+const adapter = new FileSync('article.db.json')
 const db = low(adapter)
 
-db.defaults({ posts: [], user: {} })
-.write()
+db.defaults({ articles: [] })
+    .write();
 
-module.exports = function () {
+let writeArticle = function () {
     return function (req, res, next) {
-        console.log("received:" + req.body)
-        db.get('posts')
-        .push({ id: 1, title: 'lowdb is awesome', article: req.body})
-        .write()
+        db.get('articles')
+            .push(req.body)
+            .last()
+            .assign({ id: Date.now().toString() })
+            .write()
         res.sendStatus(200)
     }
+}
+
+let getAllArticle = function () {
+    return function (req, res, next) {
+        let articles = db.get('articles')
+            .value()
+        res.send(articles);
+    }
+}
+
+let getArticleById = function () {
+    return function (req, res, next) {
+        let article = db.get('articles')
+            .find({ id: req.params.id })    
+            .value()
+        res.send(article);
+    }
+}
+
+module.exports = {
+    writeArticle,
+    getAllArticle,
+    getArticleById
 }

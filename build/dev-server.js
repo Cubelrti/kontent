@@ -17,7 +17,14 @@ var webpackConfig = (process.env.NODE_ENV === 'testing' || process.env.NODE_ENV 
 
 /**************** API Server ******************/
 var articleArchiver = require("../src/api/article-archiver")
-var bodyParser = require('body-parser');
+var bodyParser = require('body-parser')
+var cookieParser = require('cookie-parser')
+
+/**************** Authentication ******************/
+var passport = require('passport');
+var Strategy = require('passport-local').Strategy;
+var authentication = require("../src/api/authentication")
+
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
@@ -47,6 +54,47 @@ compiler.plugin('compilation', function (compilation) {
   })
 })
 
+// passport.js
+passport.use(new Strategy(
+  function(username, password, cb) {
+    authentication.findByUsername(username, function(err, user) {
+      if (err) { return cb(err); }
+      if (!user) { return cb(null, false); }
+      if (user.password != password) { return cb(null, false); }
+      return cb(null, user);
+    });
+  }));
+
+  passport.serializeUser(function(user, cb) {
+    cb(null, user.id);
+  });
+  
+  passport.deserializeUser(function(id, cb) {
+    authentication.findById(id, function (err, user) {
+      if (err) { return cb(err); }
+      cb(null, user);
+    });
+  });
+
+app.use(cookieParser());
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// authentication apis
+app.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.send('authentication success')
+});
+  
+// serve kontent apis
+app.use(bodyParser.json());
+app.get('/article/:id', articleArchiver.getArticleById())
+app.get('/article', articleArchiver.getAllArticle())
+app.post('/article', articleArchiver.writeArticle())
+
 // proxy api requests
 Object.keys(proxyTable).forEach(function (context) {
   var options = proxyTable[context]
@@ -69,10 +117,6 @@ app.use(hotMiddleware)
 // serve pure static assets
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
-
-// serve kontent apis
-app.use(bodyParser.json());
-app.post('/article', articleArchiver())
 
 var uri = 'http://localhost:' + port
 
