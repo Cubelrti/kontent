@@ -1,10 +1,10 @@
 <template>
   <section class="hero is-primary is-large">
     <div class="hero-body columns is-centered">
-      <div class="box column is-half">
+      <form action="/api/signin" method="POST" class="box column is-half">
         <div class="field">
           <p class="control has-icons-left has-icons-right">
-            <input class="input" type="email" placeholder="Email">
+            <input name="username" class="input" type="text" placeholder="Username">
             <span class="icon is-small is-left">
               <i class="fa fa-envelope"></i>
             </span>
@@ -15,7 +15,7 @@
         </div>
         <div class="field">
           <p class="control has-icons-left">
-            <input class="input" type="password" placeholder="Password">
+            <input name="password" class="input" type="password" placeholder="Password">
             <span class="icon is-small is-left">
               <i class="fa fa-lock"></i>
             </span>
@@ -23,12 +23,12 @@
         </div>
         <div class="field">
           <p class="control">
-            <button class="button is-success is-medium">
+            <button type="submit" value="Submit" class="button is-success is-medium">
               Sign in
             </button>
           </p>
         </div>
-      </div>
+      </form>
     </div>
   </section>
 </template>

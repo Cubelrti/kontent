@@ -83,17 +83,31 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // authentication apis
-app.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
+app.post('/api/signin', 
+  passport.authenticate('local', { failureRedirect: '/signin?state=failed',failureFlash: true }),
   function(req, res) {
-    res.send('authentication success')
+    res.redirect('/?authenticate=true')
+  });
+
+app.get('/api/signout',
+  function (req, res) {
+    res.logout();
+    res.redirect('/?signout=true')
+  }  
+)
+
+app.get('/api/userstate',
+  require('connect-ensure-login').ensureLoggedIn('/signin'),
+  function (req, res) {
+    let userState = Object.assign(req.user, {password:"stripped"})
+    res.send(JSON.stringify(userState));
 });
   
 // serve kontent apis
 app.use(bodyParser.json());
-app.get('/article/:id', articleArchiver.getArticleById())
-app.get('/article', articleArchiver.getAllArticle())
-app.post('/article', articleArchiver.writeArticle())
+app.get('/api/article/:id', articleArchiver.getArticleById())
+app.get('/api/article', articleArchiver.getAllArticle())
+app.post('/api/article', articleArchiver.writeArticle())
 
 // proxy api requests
 Object.keys(proxyTable).forEach(function (context) {
