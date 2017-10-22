@@ -22,9 +22,9 @@ var cookieParser = require('cookie-parser')
 
 /**************** Authentication ******************/
 var passport = require('passport');
-var Strategy = require('passport-local').Strategy;
+var Strategy = require('passport-local').Strategy
 var authentication = require("../src/api/authentication")
-
+var session = require('connect-ensure-login')
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
@@ -97,17 +97,18 @@ app.get('/api/signout',
 )
 
 app.get('/api/userstate',
-  require('connect-ensure-login').ensureLoggedIn('/signin'),
+  session.ensureLoggedIn('/signin'),
   function (req, res) {
-    let userState = Object.assign(req.user, {password:"stripped"})
-    res.send(JSON.stringify(userState));
+    let userState = Object.assign(req.user, { password: "stripped" })
+    authentication.setUserAddr(req)
+    res.send(JSON.stringify(userState))
 });
-  
-// serve kontent apis
+
+// kontent apis
 app.use(bodyParser.json());
-app.get('/api/article/:id', articleArchiver.getArticleById())
-app.get('/api/article', articleArchiver.getAllArticle())
-app.post('/api/article', articleArchiver.writeArticle())
+app.get('/api/article/:id', session.ensureLoggedIn('/signin'), articleArchiver.getArticleById())
+app.get('/api/article', session.ensureLoggedIn('/signin'), articleArchiver.getAllArticle())
+app.post('/api/article', session.ensureLoggedIn('/signin'), articleArchiver.writeArticle())
 
 // proxy api requests
 Object.keys(proxyTable).forEach(function (context) {

@@ -42,3 +42,9 @@ export default {
   
 }
 </script>
+
+<style scoped>
+  nav{
+    background-image: linear-gradient(141deg, #00d1b2 0%, #00d1b2 71%, #00e7eb 100%);
+  }
+</style>

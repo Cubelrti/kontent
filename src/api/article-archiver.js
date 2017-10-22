@@ -13,6 +13,7 @@ let writeArticle = function () {
             .push(req.body)
             .last()
             .assign({ id: Date.now().toString() })
+            .assign({ userId: req.user.id })
             .write()
         res.sendStatus(200)
     }
@@ -21,6 +22,7 @@ let writeArticle = function () {
 let getAllArticle = function () {
     return function (req, res, next) {
         let articles = db.get('articles')
+            .find({ userId: req.user.id })    
             .value()
         res.send(articles);
     }

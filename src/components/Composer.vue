@@ -1,7 +1,7 @@
 <template>
   <section class="hero is-large">
     <div id="toolbar">
-        <button class="button field is-success">
+        <button class="button field is-success" @click="submit">
           <b-icon icon="floppy-o"></b-icon>
           <span>Save Changes</span>
         </button>
@@ -21,6 +21,7 @@
 import debounce from 'lodash'
 import Vue from 'vue'
 import ArticleShow from '@/components/ArticleShow'
+import axios from 'axios'
 
 export default {
   components: {
@@ -97,7 +98,14 @@ Yes, this takes a tad more effort to create a <br />, but a simplistic “every 
   methods: {
     update: _.debounce(function(e) {
       this.input = e.target.value
-    }, 300)
+    }, 300),
+    submit: function () {
+      let payload = {
+        title: "untitled",
+        text: this.input
+      };
+      axios.post("/api/article",payload);
+    }
   }
 }
 </script>

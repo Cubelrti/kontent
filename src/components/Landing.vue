@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-primary is-fullheight is-bold">
+  <section class="hero is-primary is-fullheight">
     <div class="hero-body">
       <div class="container has-text-centered">
         <img src="../assets/logo.png">
