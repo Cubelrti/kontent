@@ -91,7 +91,7 @@ app.post('/api/signin',
 
 app.get('/api/signout',
   function (req, res) {
-    res.logout();
+    req.logout();
     res.redirect('/?signout=true')
   }  
 )
@@ -99,9 +99,8 @@ app.get('/api/signout',
 app.get('/api/userstate',
   session.ensureLoggedIn('/signin'),
   function (req, res) {
-    let userState = Object.assign(req.user, { password: "stripped" })
     authentication.setUserAddr(req)
-    res.send(JSON.stringify(userState))
+    res.send(JSON.stringify(req.user.username))
 });
 
 // kontent apis

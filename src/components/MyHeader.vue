@@ -1,6 +1,6 @@
 <template>
   <!-- Hero header: will stick at the top -->
-  <nav class="navbar is-primary is-bold">
+  <nav class="navbar">
     <div class="navbar-brand">
       <router-link class="navbar-item" to="/">
         Kontent
@@ -23,7 +23,7 @@
         <router-link to="/compose" class="navbar-item">
           Compose
         </router-link>
-        <div class="navbar-item">
+        <div class="navbar-item is-hoverable">
             <p class="control">
               <router-link to="/signin" class="button is-primary is-inverted">
                 <span>
@@ -31,6 +31,13 @@
                 </span>
               </router-link>
             </p>
+            <div class="navbar-dropdown">
+              <a @click="signout" class="navbar-item">
+                <span>
+                  Sign out
+                </span>
+              </a>
+            </div>
         </div>
       </div>
     </div>
@@ -38,13 +45,19 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-  
+  methods:{
+    signout: function () {
+      axios.get("/api/signout");
+      location.reload();
+    }
+  }
 }
 </script>
 
 <style scoped>
   nav{
-    background-image: linear-gradient(141deg, #00d1b2 0%, #00d1b2 71%, #00e7eb 100%);
+    border-bottom: 2px solid #00b1d2;
   }
 </style>
