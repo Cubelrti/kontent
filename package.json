@@ -19,7 +19,6 @@
     "cookie-parser": "^1.4.3",
     "express-session": "^1.15.6",
     "font-awesome": "^4.7.0",
-    "fontawesome": "^4.7.2",
     "lodash": "^4.17.4",
     "lowdb": "^1.0.0",
     "marked": "^0.3.6",
