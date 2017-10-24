@@ -107,6 +107,7 @@ app.get('/api/userstate',
 app.use(bodyParser.json());
 app.get('/api/article/:id', session.ensureLoggedIn('/signin'), articleArchiver.getArticleById())
 app.get('/api/article', session.ensureLoggedIn('/signin'), articleArchiver.getAllArticle())
+app.get('/api/article/:id/remove', session.ensureLoggedIn('/signin'), articleArchiver.removeArticleById())
 app.post('/api/article', session.ensureLoggedIn('/signin'), articleArchiver.writeArticle())
 
 // proxy api requests

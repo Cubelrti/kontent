@@ -2,7 +2,9 @@
   <div id="app">
     <section>
       <my-header></my-header>
-      <router-view></router-view>
+      <transition name="slide-fade">
+        <router-view></router-view>
+      </transition>
     </section>
   </div>
 </template>
@@ -37,5 +39,15 @@ export default {
   @import "~buefy/src/scss/buefy";
   $fa-font-path: "../node_modules/font-awesome/fonts";
   @import "../node_modules/font-awesome/scss/font-awesome.scss";
+
+
+.slide-fade-enter-active {
+  transition: all .2s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(40px);
+  opacity: 0;
+}
 </style>
 

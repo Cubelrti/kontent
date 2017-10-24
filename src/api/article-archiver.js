@@ -37,8 +37,18 @@ let getArticleById = function () {
     }
 }
 
+let removeArticleById = function () {
+    return function (req, res, next) {
+        let article = db.get('articles')
+            .remove({ id: req.params.id })
+            .write()
+        res.sendStatus(200);
+    }
+}
+
 module.exports = {
     writeArticle,
     getAllArticle,
-    getArticleById
+    getArticleById,
+    removeArticleById
 }

@@ -49,6 +49,15 @@ export default {
       };
       axios.post("/api/article", payload).then(() => {
         this.$snackbar.open("Article saved.")
+      }).catch((error) => {
+        this.$snackbar.open({
+          message: 'Failed to commit changes. Please sign in first.',
+          type: 'is-danger',
+          actionText: 'Sign in',
+          onAction: () => {
+              this.$router.push("/signin")
+          }
+        })
       });
     }
   }

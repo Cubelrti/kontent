@@ -27,7 +27,7 @@
             <p class="control">
               <router-link to="/signin" class="button is-primary is-inverted">
                 <span>
-                    Signin to Kontent
+                    {{ username ? username: "Signin to Kontent" }}
                 </span>
               </router-link>
             </p>
@@ -46,12 +46,19 @@
 
 <script>
 import axios from 'axios';
+import { mapState } from 'vuex'
 export default {
+  computed: mapState([
+        'username'
+    ]),
   methods:{
     signout: function () {
-      axios.get("/api/signout");
-      location.reload();
+      axios.get("/api/signout")
+      location.reload()
     }
+  },
+  mounted(){
+    this.$store.dispatch('LOAD_USER_STATE')
   }
 }
 </script>

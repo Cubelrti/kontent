@@ -23,8 +23,8 @@
         </div>
         <div class="field">
           <p class="control">
-            <button type="submit" value="Submit" class="button is-success is-medium">
-              Sign in
+            <button type="submit" value="Submit" class="button is-success is-medium" :disabled="username!==''">
+              {{ username ? `Signed in as ${username}`: "Sign in" }}
             </button>
           </p>
         </div>
@@ -34,8 +34,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-
+  computed: mapState([
+        'username'
+    ]),
 }
 </script>
 

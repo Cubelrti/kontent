@@ -1,9 +1,9 @@
 <template>
     <section class="section">
         <div class="block">
-            <button class="button field is-danger" @click="selected = noData" :disabled="selected == noData">
+            <button class="button field is-danger" @click="remove" :disabled="selected == noData">
                 <b-icon icon="times"></b-icon>
-                <span>Clear selected</span>
+                <span>Remove Article</span>
             </button>
         </div>
 
@@ -29,28 +29,42 @@
 </template>
 
 <script>
-import debounce from 'lodash'
-import ArticleShow from '@/components/ArticleShow'
-import { mapState } from 'vuex'
+import debounce from "lodash";
+import ArticleShow from "@/components/ArticleShow";
+import { mapState } from "vuex";
 export default {
-    components: {
-        ArticleShow
-    },
-    computed: mapState([
-        'articles'
-    ]),
-    data(){
-        const noData = {
-            'text': '# Select an article to continue.'
+  components: {
+    ArticleShow
+  },
+  computed: mapState(["articles"]),
+  data() {
+    const noData = {
+      text: "# Select an article to continue."
+    };
+    let selected = noData;
+    return {
+      noData,
+      selected
+    };
+  },
+  mounted: function() {
+    this.$store.dispatch("LOAD_ARTICLE_LIST").catch(error => {
+      this.$snackbar.open({
+        message: "Failed to get articles. Please sign in first.",
+        type: "is-danger",
+        actionText: "Sign in",
+        onAction: () => {
+          this.$router.push("/signin");
         }
-        let selected = noData;
-        return {
-            noData,
-            selected
-        }
-    },
-      mounted: function () {
-    this.$store.dispatch('LOAD_ARTICLE_LIST')
+      });
+    });
+  },
+  methods:{
+      remove:function () {
+          this.$store.dispatch('REMOVE_ARTICLE', {articleId: this.selected.id});
+          this.$store.dispatch("LOAD_ARTICLE_LIST");
+          this.selected = this.noData;
+      }
   }
-}
+};
 </script>
