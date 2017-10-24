@@ -47,7 +47,9 @@ export default {
         title: this.title ? this.title : "untitled",
         text: this.input
       };
-      axios.post("/api/article", payload);
+      axios.post("/api/article", payload).then(() => {
+        this.$snackbar.open("Article saved.")
+      });
     }
   }
 };
