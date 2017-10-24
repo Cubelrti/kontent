@@ -12,3 +12,6 @@ test/unit/coverage
 *.ntvs*
 *.njsproj
 *.sln
+
+article.db.json
+users.db.json
