@@ -23,13 +23,8 @@ export default {
 
 <style scoped>
   footer{
-    background-color: #00d1b2;
-    color: white;
+    background-color: #white;
+
   }
-  strong{
-    color: white;
-  }
-  a{
-    color: white;
-  }
+
 </style>

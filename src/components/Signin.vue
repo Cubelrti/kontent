@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-primary is-large">
+  <section class="hero is-primary is-fullheight">
     <div class="hero-body columns is-centered">
       <form action="/api/signin" method="POST" class="box column is-half">
         <div class="field">

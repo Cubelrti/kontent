@@ -8,7 +8,7 @@
         </div>
 
         <div class="columns">
-            <div class="column is-one-third">
+            <div class="column is-one-quarter">
                 <b-table :data="tableDataSimple" :selected.sync="selected">
 
                     <template scope="props">

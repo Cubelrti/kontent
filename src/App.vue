@@ -3,20 +3,17 @@
     <section>
       <my-header></my-header>
       <router-view></router-view>
-      <my-footer></my-footer>
     </section>
   </div>
 </template>
 
 <script>
 import MyHeader from '@/components/MyHeader'
-import MyFooter from '@/components/MyFooter'
 
 export default {
   name: 'app',
   components: {
-    MyHeader,
-    MyFooter
+    MyHeader
   }
 }
 </script>

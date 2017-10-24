@@ -1,7 +1,11 @@
 <template>
   <section class="hero is-large">
-    <div id="toolbar">
-        <button class="button field is-success" @click="submit">
+    <div id="toolbar" class="columns">
+        <b-field class="column">
+            <b-input v-model="title" placeholder="Article Title"></b-input>
+        </b-field>
+        <div class="column">
+          <button class="button field is-success" @click="submit">
           <b-icon icon="floppy-o"></b-icon>
           <span>Save Changes</span>
         </button>
@@ -9,6 +13,7 @@
           <b-icon icon="times"></b-icon>
           <span>Dismiss Changes</span>
         </button>
+        </div>
     </div>
     <div id="editor">
       <textarea :value="input" @input="update" />
@@ -18,10 +23,10 @@
 </template>
 
 <script>
-import debounce from 'lodash'
-import Vue from 'vue'
-import ArticleShow from '@/components/ArticleShow'
-import axios from 'axios'
+import debounce from "lodash";
+import Vue from "vue";
+import ArticleShow from "@/components/ArticleShow";
+import axios from "axios";
 
 export default {
   components: {
@@ -92,22 +97,23 @@ Underscores
 A paragraph is simply one or more consecutive lines of text, separated by one or more blank lines. (A blank line is any line that looks like a blank line — a line containing nothing but spaces or tabs is considered blank.) Normal paragraphs should not be indented with spaces or tabs.
 The implication of the “one or more consecutive lines of text” rule is that Markdown supports “hard-wrapped” text paragraphs. This differs significantly from most other text-to-HTML formatters (including Movable Type’s “Convert Line Breaks” option) which translate every line break character in a paragraph into a <br /> tag.
 When you do want to insert a <br /> break tag using Markdown, you end a line with two or more spaces, then type return.
-Yes, this takes a tad more effort to create a <br />, but a simplistic “every line break is a <br />” rule wouldn’t work for Markdown. Markdown’s email-style blockquoting and multi-paragraph list items work best — and look better — when you format them with hard breaks.`
-    }
+Yes, this takes a tad more effort to create a <br />, but a simplistic “every line break is a <br />” rule wouldn’t work for Markdown. Markdown’s email-style blockquoting and multi-paragraph list items work best — and look better — when you format them with hard breaks.`,
+      title: ""
+    };
   },
   methods: {
     update: _.debounce(function(e) {
-      this.input = e.target.value
+      this.input = e.target.value;
     }, 300),
-    submit: function () {
+    submit: function() {
       let payload = {
-        title: "untitled",
+        title: this.title ? this.title : "untitled",
         text: this.input
       };
-      axios.post("/api/article",payload);
+      axios.post("/api/article", payload);
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -115,8 +121,12 @@ html,
 body,
 #editor {
   height: 80vh;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Helvetica Neue", Arial, sans-serif;
   color: #333;
+}
+
+#toolbar{
+  margin:0;
 }
 
 textarea,
@@ -137,7 +147,7 @@ textarea {
   outline: none;
   background-color: #f6f6f6;
   font-size: 14px;
-  font-family: 'Monaco', courier, monospace;
+  font-family: "Monaco", courier, monospace;
   padding: 20px;
 }
 
@@ -145,7 +155,7 @@ code {
   color: #f66;
 }
 
-#toolbar{
-  padding:20px;
+#toolbar {
+  padding: 20px;
 }
 </style>
