@@ -9,7 +9,6 @@
 
 <script>
 import MyHeader from '@/components/MyHeader'
-
 export default {
   name: 'app',
   components: {
