@@ -5,11 +5,17 @@
       <router-link class="navbar-item" to="/">
         Kontent
       </router-link>
-
+    <span class="navbar-burger burger"
+                    :class="{ 'is-active': isMenuActive }"
+                    @click="isMenuActive = !isMenuActive">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
       
     </div>
-  
-    <div id="navMenuColorprimary" class="navbar-menu">
+
+    <div id="navMenuColorprimary" class="navbar-menu" :class="{ 'is-active': isMenuActive }">
       <div class="navbar-start">
       </div>
   
@@ -71,7 +77,12 @@ export default {
   },
   mounted(){
     this.$store.dispatch('LOAD_USER_STATE')
-  }
+  },
+  data() {
+            return {
+                isMenuActive: false
+            }
+        },
 }
 </script>
 
