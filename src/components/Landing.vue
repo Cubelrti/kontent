@@ -7,7 +7,7 @@
           Kontent
         </h1>
         <h2 class="subtitle">
-          Just a lightweight CMS.
+          A file-based lightweight CMS. Just a blog for now ;)
         </h2>
       </div>
     </div>

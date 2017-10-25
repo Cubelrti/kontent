@@ -37,6 +37,17 @@ let getArticleById = function () {
     }
 }
 
+let editArticleById = function () {
+    return function (req, res, next) {
+        let { title, text } = req.body;
+        let article = db.get('articles')
+            .find({ id: req.params.id })    
+            .assign({ title: title, text: text })
+            .write()
+        res.sendStatus(200)
+    }
+}
+
 let removeArticleById = function () {
     return function (req, res, next) {
         let article = db.get('articles')
@@ -50,5 +61,6 @@ module.exports = {
     writeArticle,
     getAllArticle,
     getArticleById,
-    removeArticleById
+    removeArticleById,
+    editArticleById
 }

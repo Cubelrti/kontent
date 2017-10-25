@@ -28,7 +28,7 @@ export default new Router({
       path: "/compose",
       name: "Composer",
       component: Composer
-    }
+    },
   ],
   mode: 'history'
 })

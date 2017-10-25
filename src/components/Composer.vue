@@ -2,7 +2,7 @@
   <section class="hero is-large">
     <div id="toolbar" class="columns">
         <b-field class="column">
-            <b-input v-model="title" placeholder="Article Title"></b-input>
+            <b-input v-model="editingArticle.title" placeholder="Article Title"></b-input>
         </b-field>
         <div class="column">
           <button class="button field is-success" @click="submit">
@@ -16,8 +16,8 @@
         </div>
     </div>
     <div id="editor">
-      <textarea :value="input" @input="update" placeholder="Write down your thoughts in Markdown... "/>
-      <article-show :article="input"></article-show>
+      <textarea v-model="editingArticle.text" placeholder="Write down your thoughts in Markdown... "/>
+      <article-show :article="editingArticle.text"></article-show>
     </div>
   </section>
 </template>
@@ -27,27 +27,16 @@ import debounce from "lodash";
 import Vue from "vue";
 import ArticleShow from "@/components/ArticleShow";
 import axios from "axios";
+import { mapState } from "vuex";
 
 export default {
   components: {
     ArticleShow
   },
-  data() {
-    return {
-      input: "",
-      title: "",
-    };
-  },
+  computed: mapState(["editingArticle"]),
   methods: {
-    update: _.debounce(function(e) {
-      this.input = e.target.value;
-    }, 300),
     submit: function() {
-      let payload = {
-        title: this.title ? this.title : "untitled",
-        text: this.input
-      };
-      axios.post("/api/article", payload).then(() => {
+      this.$store.dispatch("SUBMIT_ARTICLE").then(() => {
         this.$snackbar.open("Article saved.")
       }).catch((error) => {
         this.$snackbar.open({
@@ -58,8 +47,8 @@ export default {
               this.$router.push("/signin")
           }
         })
-      });
-    }
+      })
+    },
   }
 };
 </script>

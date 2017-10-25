@@ -1,6 +1,9 @@
 <template>
     <section class="section">
         <div class="block">
+            <button class="button field is-info" @click="edit" :disabled="selected == noData">
+                <span>Edit Article</span>
+            </button>
             <button class="button field is-danger" @click="remove" :disabled="selected == noData">
                 <b-icon icon="times"></b-icon>
                 <span>Remove Article</span>
@@ -64,6 +67,10 @@ export default {
           this.$store.dispatch('REMOVE_ARTICLE', {articleId: this.selected.id});
           this.$store.dispatch("LOAD_ARTICLE_LIST");
           this.selected = this.noData;
+      },
+      edit: function () {
+          this.$store.commit('SET_EDITING_ARTICLE', this.selected);
+          this.$router.push('/compose')
       }
   }
 };

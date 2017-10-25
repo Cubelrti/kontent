@@ -109,6 +109,7 @@ app.get('/api/article/:id', session.ensureLoggedIn('/signin'), articleArchiver.g
 app.get('/api/article', session.ensureLoggedIn('/signin'), articleArchiver.getAllArticle())
 app.get('/api/article/:id/remove', session.ensureLoggedIn('/signin'), articleArchiver.removeArticleById())
 app.post('/api/article', session.ensureLoggedIn('/signin'), articleArchiver.writeArticle())
+app.post('/api/article/:id', session.ensureLoggedIn('/signin'), articleArchiver.editArticleById())
 
 // proxy api requests
 Object.keys(proxyTable).forEach(function (context) {
