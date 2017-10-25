@@ -9,7 +9,7 @@
           <b-icon icon="floppy-o"></b-icon>
           <span>Save Changes</span>
         </button>
-        <button class="button field is-danger">
+        <button class="button field is-danger" @click="dismiss" v-if="editingArticle.id">
           <b-icon icon="times"></b-icon>
           <span>Dismiss Changes</span>
         </button>
@@ -49,6 +49,9 @@ export default {
         })
       })
     },
+    dismiss: function () {
+      this.$store.dispatch('LOAD_ARTICLE', {articleId: this.editingArticle.id})
+    }
   }
 };
 </script>

@@ -40,7 +40,11 @@ const store = new Vuex.Store({
         return axios.post(`/api/article/${id}`, payload)
       }
       return axios.post('/api/article', payload)
-      
+    },
+    LOAD_ARTICLE: function ({ commit, state }, { articleId }) { 
+      return axios.get(`/api/article/${articleId}`).then((response) => {
+        commit('SET_EDITING_ARTICLE',response.data)
+      })
     }
   },
   mutations: {
