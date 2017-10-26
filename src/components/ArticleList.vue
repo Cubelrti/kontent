@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import debounce from "lodash";
+import { find } from "lodash";
 import ArticleShow from "@/components/ArticleShow";
 import { mapState } from "vuex";
 export default {
@@ -51,7 +51,13 @@ export default {
     };
   },
   mounted: function() {
-    this.$store.dispatch("LOAD_ARTICLE_LIST").catch(error => {
+    this.$store.dispatch("LOAD_ARTICLE_LIST").then(() => {
+        if(this.$route.params.id){
+            let id = this.$route.params.id
+            this.selected = _.find(this.articles, {id: id});
+        }
+    }).catch(error => {
+        console.log(error)
       this.$snackbar.open({
         message: "Failed to get articles. Please sign in first.",
         type: "is-danger",

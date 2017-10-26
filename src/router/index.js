@@ -21,7 +21,7 @@ export default new Router({
     },
     {
       path: "/list",
-      name: 'List',
+      name: 'DefaultList',
       component: List
     },
     {
@@ -29,6 +29,11 @@ export default new Router({
       name: "Composer",
       component: Composer
     },
+    {
+      path: "/list/:id",
+      name: "List",
+      component: List
+    }
   ],
   mode: 'history'
 })

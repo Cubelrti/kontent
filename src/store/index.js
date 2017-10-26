@@ -35,7 +35,7 @@ const store = new Vuex.Store({
         title: title ? title : "untitled",
         text: text
       };
-      //if editingArticle
+      // is editing?
       if (id) {
         return axios.post(`/api/article/${id}`, payload)
       }
@@ -45,7 +45,7 @@ const store = new Vuex.Store({
       return axios.get(`/api/article/${articleId}`).then((response) => {
         commit('SET_EDITING_ARTICLE',response.data)
       })
-    }
+    },
   },
   mutations: {
     SET_ARTICLE_LIST: (state, data) => {
