@@ -30,8 +30,8 @@ export default new Router({
       component: Composer
     },
     {
-      path: "/list/:id",
-      name: "List",
+      path: "/article/:id",
+      name: "ArticleShow",
       component: List
     }
   ],

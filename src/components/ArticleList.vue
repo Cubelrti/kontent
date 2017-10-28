@@ -1,6 +1,9 @@
 <template>
     <section class="section">
         <div class="block">
+            <button class="button field is-info" @click="refresh">
+                <span>Refresh Article</span>
+            </button>
             <button class="button field is-info" @click="edit" :disabled="selected == noData">
                 <span>Edit Article</span>
             </button>
@@ -25,6 +28,9 @@
             </div>
 
             <div class="column">
+                <h1 class="title">{{this.selected.title}}</h1>
+                <span>ArticleID: {{ this.selected.id }} / AuthorID: {{ this.selected.userId }}</span>
+                <hr/>
                 <article-show :article="this.selected.text"></article-show>
             </div>
         </div>
@@ -51,33 +57,41 @@ export default {
     };
   },
   mounted: function() {
-    this.$store.dispatch("LOAD_ARTICLE_LIST").then(() => {
-        if(this.$route.params.id){
-            let id = this.$route.params.id
-            this.selected = _.find(this.articles, {id: id});
-        }
-    }).catch(error => {
-        console.log(error)
-      this.$snackbar.open({
-        message: "Failed to get articles. Please sign in first.",
-        type: "is-danger",
-        actionText: "Sign in",
-        onAction: () => {
-          this.$router.push("/signin");
-        }
-      });
+    if (this.articles.length !== 0) return;
+    this.refresh().then(() => {
+      if (this.$route.params.id) {
+        let id = this.$route.params.id;
+        this.selected = _.find(this.articles, { id: id });
+      }
     });
   },
-  methods:{
-      remove:function () {
-          this.$store.dispatch('REMOVE_ARTICLE', {articleId: this.selected.id});
-          this.$store.dispatch("LOAD_ARTICLE_LIST");
-          this.selected = this.noData;
-      },
-      edit: function () {
-          this.$store.commit('SET_EDITING_ARTICLE', this.selected);
-          this.$router.push('/compose')
-      }
+  methods: {
+    remove: function() {
+      this.$store.dispatch("REMOVE_ARTICLE", { articleId: this.selected.id });
+      this.$store.dispatch("LOAD_ARTICLE_LIST");
+      this.selected = this.noData;
+    },
+    edit: function() {
+      this.$store.commit("SET_EDITING_ARTICLE", this.selected);
+      this.$router.push("/compose");
+    },
+    refresh: function() {
+      return this.$store
+        .dispatch("LOAD_ARTICLE_LIST")
+        .then(() => {
+          this.$snackbar.open("Article loaded.");
+        })
+        .catch(error => {
+          this.$snackbar.open({
+            message: "Failed to get articles. Please sign in first.",
+            type: "is-danger",
+            actionText: "Sign in",
+            onAction: () => {
+              this.$router.push("/signin");
+            }
+          });
+        });
+    }
   }
 };
 </script>

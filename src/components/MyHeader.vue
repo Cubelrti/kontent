@@ -63,7 +63,7 @@ import axios from 'axios';
 import { mapState } from 'vuex'
 export default {
   computed: mapState([
-        'username'
+      'username'
     ]),
   methods:{
     signout: function () {

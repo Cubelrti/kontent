@@ -11,6 +11,6 @@ export default {
     compiledMarkdown: function() {
       return marked(this.article, { sanitize: true });
     }
-  }
+  },
 };
 </script>
