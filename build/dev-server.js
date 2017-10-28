@@ -93,8 +93,10 @@ app.get('/api/signout',
   function (req, res) {
     req.logout();
     res.redirect('/?signout=true')
-  }  
+  }
 )
+
+app.post('/api/signup', authentication.userSignUp())
 
 app.get('/api/userstate',
   session.ensureLoggedIn('/signin'),

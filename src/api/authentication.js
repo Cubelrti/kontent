@@ -7,6 +7,17 @@ const db = low(adapter)
 db.defaults({ users: [] })
     .write();
 
+let userSignUp = function () {
+    return function (req, res) {
+        let user = db.get('users')
+            .push(req.body)
+            .last()
+            .assign({ registeredIpAddr: req.ip })
+            .write()
+        res.sendStatus(200);
+    }
+}
+
 let setUserAddr = function (req) {
     let user = db.get('users')
         .find({ username: req.user.username })
@@ -31,5 +42,6 @@ let findById = function (id, callback) {
 module.exports = {
     findByUsername,
     findById,
-    setUserAddr
+    setUserAddr,
+    userSignUp
 }
