@@ -22,7 +22,6 @@ let writeArticle = function () {
 let getAllArticle = function () {
     return function (req, res, next) {
         let articles = db.get('articles')
-            .filter({ userId: req.user.id })    
             .value()
         res.send(articles);
     }
