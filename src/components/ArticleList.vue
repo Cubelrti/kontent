@@ -51,7 +51,7 @@ export default {
       text: "# Select an article to continue."
     };
     let selected = noData;
-    let loading = this.articles.length == 0 ? true : false;
+    let loading = true;
     return {
       noData,
       selected,
@@ -59,7 +59,10 @@ export default {
     };
   },
   mounted: function() {
-    if (this.articles.length !== 0) return;
+    if (this.articles.length !== 0) {
+      this.loading = false;
+      return;
+    }
     this.refresh().then(() => {
       if (this.$route.params.id) {
         let id = this.$route.params.id;
