@@ -85,8 +85,8 @@ app.get('/api/userstate',
 
 // kontent apis
 app.use(bodyParser.json());
-app.get('/api/article/:id', session.ensureLoggedIn('/signin'), articleArchiver.getArticleById())
-app.get('/api/article', session.ensureLoggedIn('/signin'), articleArchiver.getAllArticle())
+app.get('/api/article/:id', articleArchiver.getArticleById())
+app.get('/api/article', articleArchiver.getAllArticle())
 app.get('/api/article/:id/remove', session.ensureLoggedIn('/signin'), articleArchiver.removeArticleById())
 app.post('/api/article', session.ensureLoggedIn('/signin'), articleArchiver.writeArticle())
 app.post('/api/article/:id', session.ensureLoggedIn('/signin'), articleArchiver.editArticleById())
