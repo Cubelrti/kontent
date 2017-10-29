@@ -15,7 +15,7 @@
 
         <div class="columns">
             <div class="column is-one-quarter">
-                <b-table :data="articles" :selected.sync="selected" @click="select">
+                <b-table :data="articles" :selected.sync="selected" @click="select" :loading="loading">
                     <template scope="props">
                         <b-table-column label="Title">
                             {{ props.row.title }}
@@ -51,9 +51,11 @@ export default {
       text: "# Select an article to continue."
     };
     let selected = noData;
+    let loading = true;
     return {
       noData,
-      selected
+      selected,
+      loading
     };
   },
   mounted: function() {
@@ -76,9 +78,11 @@ export default {
       this.$router.push("/compose");
     },
     refresh: function() {
+      this.loading = true;
       return this.$store
         .dispatch("LOAD_ARTICLE_LIST")
         .then(() => {
+          this.loading = false;
           this.$snackbar.open("Article loaded.");
         })
         .catch(error => {
