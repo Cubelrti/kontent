@@ -15,9 +15,12 @@ Visit a live demo [here](http://kontent.za-pt.org).
 
 ## Quick Start
 
-You need NodeJS 6+.
+You need NodeJS 6+, npm or yarn.
 
 ### 1 Clone repo
+```bash
+git clone https://github.com/Cubelrti/kontent.git
+```
 
 ### 2 Install dependencies
 ```bash
