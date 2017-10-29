@@ -2,26 +2,52 @@
 
 > A lightweight CMS based on Vue.js
 
-## Build Setup
+## Features
 
-``` bash
-# install dependencies
+* Live Markdown Editor
+* Built-in User Authentication
+* File-based Article CRUD
+* Simple but fast article listing
+
+##  Demo
+
+Visit a live demo [here](http://kontent.za-pt.org).
+
+## Quick Start
+
+You need NodeJS 6+.
+
+### 1 Clone repo
+
+### 2 Install dependencies
+```bash
 npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
+# OR
+yarn
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+### 3 Start server
+```bash
+# Using Webpack-hot-middleware for dev
+npm run dev
+# OR using prebuilt files in /dist
+npm run start:static
+```
+
+## Misc
+
+You can build a static version of client-side files via the following command:
+```bash
+npm run build
+```
+
+which will uglify and bundle all things up.
+
+## Credits and Thanks
+
+* [Vue.js](https://vuejs.org/) for front-end framework
+* [Buefy](http://buefy.github.io/) for css framework
+
+## Copyright and License
+
+Copyright (c) 2017 Cubelrti. Code released under the [MIT]((https://github.com/Cubelrti/kontent/blob/master/LICENSE)) license.
