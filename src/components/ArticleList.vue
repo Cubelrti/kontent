@@ -51,7 +51,7 @@ export default {
       text: "# Select an article to continue."
     };
     let selected = noData;
-    let loading = true;
+    let loading = this.articles.length == 0 ? true : false;
     return {
       noData,
       selected,
