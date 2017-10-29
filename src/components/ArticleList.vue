@@ -15,7 +15,7 @@
 
         <div class="columns">
             <div class="column is-one-quarter">
-                <b-table :data="articles" :selected.sync="selected">
+                <b-table :data="articles" :selected.sync="selected" @click="select">
                     <template scope="props">
                         <b-table-column label="Title">
                             {{ props.row.title }}
@@ -91,7 +91,11 @@ export default {
             }
           });
         });
+    },
+    select: function() {
+      this.$router.push(`/article/${this.selected.id}`)
     }
+    
   }
 };
 </script>

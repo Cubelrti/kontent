@@ -23,7 +23,7 @@
         <router-link to="/" class="navbar-item">
           Landing
         </router-link>
-        <router-link to="/list" class="navbar-item">
+        <router-link to="/article" class="navbar-item">
           List
         </router-link>
         <a @click="compose" class="navbar-item">

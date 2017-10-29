@@ -20,7 +20,7 @@ export default new Router({
       component: Signin
     },
     {
-      path: "/list",
+      path: "/article",
       name: 'DefaultList',
       component: List
     },
