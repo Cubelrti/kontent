@@ -29,6 +29,8 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware
 var proxyTable = config.dev.proxyTable
+// default IP address where dev server set on for incoming traffic
+var ipAddr = process.env.IP || config.dev.ip
 
 var app = express()
 
@@ -107,7 +109,7 @@ app.use(require('connect-history-api-fallback')())
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
-var uri = 'http://localhost:' + port
+var uri = 'http://' + ipAddr + ':' + port
 
 var _resolve
 var readyPromise = new Promise(resolve => {

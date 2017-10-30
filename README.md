@@ -37,6 +37,22 @@ npm run dev
 npm run start:static
 ```
 
+### 4 Configurations
+
+You should set up users to manage the articles in `users.db.json`
+```javascript
+{
+  "users": [
+    {
+      "username": "",  
+      "password": "",
+      "id": "1",
+    }
+  ]
+}
+```
+Then Kontent is ready to go.
+
 ## Misc
 
 You can build a static version of client-side files via the following command:
@@ -45,6 +61,13 @@ npm run build
 ```
 
 which will uglify and bundle all things up.
+
+You can set-up your ip address in `/config/index.js` if you want incoming traffic from internet (only prebuilt server supported).
+```javascript
+dev: {
+    ip: '' // your ip goes here
+}
+```
 
 ## Credits and Thanks
 
