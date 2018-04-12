@@ -4,10 +4,10 @@
       <div class="container has-text-centered">
         <img src="../assets/logo.png">
         <h1 class="title">
-          Kontent
+          {{settings.displayTitle}}
         </h1>
         <h2 class="subtitle">
-          A file-based lightweight CMS.
+          {{settings.slogan}}
         </h2>
       </div>
     </div>
@@ -15,8 +15,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
-
+  computed: mapState(["settings"]),
 }
 </script>
 

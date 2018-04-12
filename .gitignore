@@ -13,5 +13,4 @@ test/unit/coverage
 *.njsproj
 *.sln
 
-article.db.json
-users.db.json
+*.db.json

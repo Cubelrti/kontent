@@ -6,11 +6,16 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     articles: [],
-    username: "",
+    username: '',
+    settings: {
+      displayTitle: 'Kontent',
+      slogan: 'A file-based lightweight CMS.',
+    },
     editingArticle: {
       text: '',
       title: '',
-      id:''
+      id: '',
+      isCheckList: false,
     }
   },
   actions: {
@@ -21,19 +26,21 @@ const store = new Vuex.Store({
         return Promise.reject(new Error('failed'))
       })
     },
-    LOAD_USER_STATE: function ({ commit }) {
-      return axios.get('/api/userstate').then((response) => { 
-        commit('SET_USERNAME',response.data)
-      })
+    LOAD_USER_STATE: function ({ commit, state }) {
+        return axios.get('/api/userstate').then((response) => {
+          commit('SET_USERNAME', response.data)
+        })
+      
     },
     REMOVE_ARTICLE: function ({ commit, state }, { articleId }) {
       return axios.get(`/api/article/${articleId}/remove`);
     },
     SUBMIT_ARTICLE: function ({ commit, state }) {
-      let { text, title, id } = state.editingArticle;
+      let { text, title, id, isCheckList } = state.editingArticle;
       let payload = {
         title: title ? title : "untitled",
-        text: text
+        text: text,
+        isCheckList: isCheckList
       };
       // is editing?
       if (id) {
@@ -46,6 +53,14 @@ const store = new Vuex.Store({
         commit('SET_EDITING_ARTICLE',response.data)
       })
     },
+    LOAD_SETTINGS: function ({commit, state}) {
+      return axios.get(`/api/config`).then((response) => {
+        commit('SET_SETTINGS', response.data);
+      });
+    },
+    SUBMIT_SETTINGS: function ({ commit, state }) {
+      return axios.post('/api/config', state.settings);
+    }
   },
   mutations: {
     SET_ARTICLE_LIST: (state, data) => {
@@ -56,6 +71,12 @@ const store = new Vuex.Store({
     },
     SET_EDITING_ARTICLE: (state, data) => {
       state.editingArticle = data
+    },
+    SET_CHECKLIST_STATE: (state, data) => {
+      state.editingChecklist = data;
+    },
+    SET_SETTINGS: (state, data) => {
+      state.settings = data;
     }
   },
   getters: {

@@ -17,6 +17,7 @@ var webpackConfig = (process.env.NODE_ENV === 'testing' || process.env.NODE_ENV 
 
 /**************** API Server ******************/
 var articleArchiver = require("../src/api/article-archiver")
+var kontentSettings = require("../src/api/kontent")
 var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
 
@@ -107,11 +108,13 @@ app.get('/api/userstate',
 
 // kontent apis
 app.use(bodyParser.json());
+app.get('/api/config', kontentSettings.getConfiguration())
 app.get('/api/article/:id', articleArchiver.getArticleById())
 app.get('/api/article', articleArchiver.getAllArticle())
 app.get('/api/article/:id/remove', session.ensureLoggedIn('/signin'), articleArchiver.removeArticleById())
 app.post('/api/article', session.ensureLoggedIn('/signin'), articleArchiver.writeArticle())
 app.post('/api/article/:id', session.ensureLoggedIn('/signin'), articleArchiver.editArticleById())
+app.post('/api/config', session.ensureLoggedIn('/signin'), kontentSettings.writeConfiguration())
 
 // proxy api requests
 Object.keys(proxyTable).forEach(function (context) {

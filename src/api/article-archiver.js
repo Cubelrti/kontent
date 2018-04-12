@@ -14,6 +14,7 @@ let writeArticle = function () {
             .last()
             .assign({ id: Date.now().toString() })
             .assign({ userId: req.user.id })
+            .assign({ subversion: []})
             .write()
         res.sendStatus(200)
     }
@@ -40,8 +41,9 @@ let editArticleById = function () {
     return function (req, res, next) {
         let { title, text } = req.body;
         let article = db.get('articles')
-            .find({ id: req.params.id })    
-            .assign({ title: title, text: text })
+            .find({ id: req.params.id });
+        let subversions = article.get('subversion').concat(article.get('text').value()).value();
+        article.assign({ title: title, text: text, subversion: subversions })
             .write()
         res.sendStatus(200)
     }

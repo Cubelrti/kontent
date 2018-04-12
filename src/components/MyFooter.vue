@@ -3,7 +3,7 @@
     <div class="container">
       <div class="content has-text-centered">
         <p>
-          Page is rendered by Vue.js
+          Page is rendered by Kontent
         </p>
         <p>
           <strong>Kontent</strong> by
@@ -23,8 +23,7 @@ export default {
 
 <style scoped>
   footer{
-    background-color: #white;
-
+    background-color: whitesmoke;
   }
 
 </style>

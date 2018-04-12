@@ -15,7 +15,39 @@
 
         <div class="columns">
             <div class="column is-one-quarter">
-                <b-table :data="articles" :selected.sync="selected" @click="select" :loading="loading">
+              <b-tabs v-model="activeTab">
+                <b-tab-item label="Article CheckList">
+                  <b-table :data="articles" :selected.sync="selected" @click="select" :loading="loading">
+                    <template scope="props">
+                        <b-table-column label="推送列表">
+                            <div class="card">
+                              <div class="card-content">
+                                <p class="title">
+                                  {{ props.row.title }}
+                                </p>
+                                <p class="subtitle">
+                                  Jeff Atwood
+                                </p>
+                              </div>
+                              <footer class="card-footer">
+                                <p class="card-footer-item">
+                                  <span>
+                                    同意推送
+                                  </span>
+                                </p>
+                                <p class="card-footer-item">
+                                  <span>
+                                    修改
+                                  </span>
+                                </p>
+                              </footer>
+                            </div>
+                        </b-table-column>
+                    </template>
+                  </b-table>
+                </b-tab-item>
+                <b-tab-item label="Articles">
+                  <b-table :data="articles" :selected.sync="selected" @select="select" :loading="loading">
                     <template scope="props">
                         <b-table-column label="Title">
                             {{ props.row.title }}
@@ -24,7 +56,10 @@
                             {{ new Date(parseInt(props.row.id)).toLocaleDateString() }}
                         </b-table-column>
                     </template>
-                </b-table>
+                  </b-table>
+                </b-tab-item>
+              </b-tabs>
+                
             </div>
 
             <div class="column">
@@ -53,6 +88,7 @@ export default {
     let selected = noData;
     let loading = true;
     return {
+      activeTab: 0,
       noData,
       selected,
       loading

@@ -5,16 +5,19 @@
       <transition name="slide-fade">
         <router-view></router-view>
       </transition>
+      <my-footer v-if="!($route.path === '/' || $route.path === '/compose')"></my-footer>
     </section>
   </div>
 </template>
 
 <script>
 import MyHeader from '@/components/MyHeader'
+import MyFooter from '@/components/MyFooter'
 export default {
   name: 'app',
   components: {
-    MyHeader
+    MyHeader,
+    MyFooter
   }
 }
 </script>
