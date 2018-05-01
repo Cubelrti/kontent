@@ -74,7 +74,7 @@ export default {
       location.reload();
     },
     compose: function() {
-      this.$store.commit("SET_EDITING_ARTICLE", { title: "", text: "" });
+      this.$store.commit("SET_EDITING_ARTICLE", { title: "", text: "", checkList: [] });
       this.$router.push("/compose");
     },
     config: function() {

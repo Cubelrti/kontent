@@ -39,11 +39,11 @@ let getArticleById = function () {
 
 let editArticleById = function () {
     return function (req, res, next) {
-        let { title, text } = req.body;
+        let { title, text, checkList } = req.body;
         let article = db.get('articles')
             .find({ id: req.params.id });
-        let subversions = article.get('subversion').concat(article.get('text').value()).value();
-        article.assign({ title: title, text: text, subversion: subversions })
+        //let subversions = article.get('subversion').concat(article.get('text').value()).value();
+        article.assign({ title: title, text: text, subversion: "", checkList: checkList })
             .write()
         res.sendStatus(200)
     }

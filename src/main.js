@@ -6,6 +6,8 @@ import router from './router'
 import Buefy from 'buefy'
 import Vuex from 'vuex'
 import store from '@/store'
+import wysiwyg from "vue-wysiwyg";
+
 
 Vue.config.productionTip = false
 
@@ -14,6 +16,9 @@ Vue.use(Buefy, {
 });
 
 Vue.use(Vuex);
+Vue.use(wysiwyg, {}); 
+
+Object.defineProperty(document, "referrer", {get : function(){ return "xiumi.us"; }});
 
 /* eslint-disable no-new */
 new Vue({

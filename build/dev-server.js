@@ -17,6 +17,7 @@ var webpackConfig = (process.env.NODE_ENV === 'testing' || process.env.NODE_ENV 
 
 /**************** API Server ******************/
 var articleArchiver = require("../src/api/article-archiver")
+var checklistArchiver = require("../src/api/checklist-archiver")
 var kontentSettings = require("../src/api/kontent")
 var bodyParser = require('body-parser')
 var cookieParser = require('cookie-parser')
@@ -110,9 +111,13 @@ app.get('/api/userstate',
 app.use(bodyParser.json());
 app.get('/api/config', kontentSettings.getConfiguration())
 app.get('/api/article/:id', articleArchiver.getArticleById())
-app.get('/api/article', articleArchiver.getAllArticle())
+app.get('/api/checklist', checklistArchiver.getAllChecklist())
+app.get('/api/article', session.ensureLoggedIn('/signin'), articleArchiver.getAllArticle())
 app.get('/api/article/:id/remove', session.ensureLoggedIn('/signin'), articleArchiver.removeArticleById())
+app.get('/api/checklist/:id/remove', session.ensureLoggedIn('/signin'), checklistArchiver.removeChecklistById())
 app.post('/api/article', session.ensureLoggedIn('/signin'), articleArchiver.writeArticle())
+app.post('/api/checklist', session.ensureLoggedIn('/signin'), checklistArchiver.writeChecklist())
+app.post('/api/checklist/:id', session.ensureLoggedIn('/signin'), checklistArchiver.editChecklistById())
 app.post('/api/article/:id', session.ensureLoggedIn('/signin'), articleArchiver.editArticleById())
 app.post('/api/config', session.ensureLoggedIn('/signin'), kontentSettings.writeConfiguration())
 

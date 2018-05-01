@@ -1,15 +1,23 @@
 <template>
-  <div ref="artcleDisplayer" v-html="compiledMarkdown" class="content"></div>
+  <div class="flex">
+    <iframe v-if="this.article.url" :src="this.article.url" ref="artcleDisplayer" class="content" height="600px" width="555px"/>
+    <div ref="artcleDisplayer" v-else v-html="this.article.text" class="content"></div>
+  </div>
 </template>
 
 <script>
-import marked from "marked";
 export default {
   props: ["article"],
-  computed: {
-    compiledMarkdown: function() {
-      return marked(this.article, { sanitize: true, gfm:true });
-    }
-  },
 };
 </script>
+<style scoped>
+  .content{
+    max-width: 555px;
+  }
+  .flex{
+    display: flex
+  }
+  .status{
+    margin-left: 20px
+  }
+</style>

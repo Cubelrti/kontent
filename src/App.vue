@@ -42,6 +42,19 @@ export default {
   @import "~buefy/src/scss/buefy";
   $fa-font-path: "../node_modules/font-awesome/fonts";
   @import "../node_modules/font-awesome/scss/font-awesome.scss";
+  @import "~vue-wysiwyg/dist/vueWysiwyg.css";
+
+
+.editr--toolbar{
+  position: fixed;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+.editr--content{
+  margin-top: 32px;
+  padding:30px;
+
+}
 
 
 .slide-fade-enter-active {

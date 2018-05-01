@@ -16,8 +16,8 @@
         <div class="columns">
             <div class="column is-one-quarter">
               <b-tabs v-model="activeTab">
-                <b-tab-item label="Article CheckList">
-                  <b-table :data="articles" :selected.sync="selected" @click="select" :loading="loading">
+                <b-tab-item label="检查单">
+                  <b-table :data="articles" :selected.sync="selected" @select="select" :loading="loading">
                     <template scope="props">
                         <b-table-column label="推送列表">
                             <div class="card">
@@ -26,7 +26,7 @@
                                   {{ props.row.title }}
                                 </p>
                                 <p class="subtitle">
-                                  Jeff Atwood
+                                  {{ new Date(parseInt(props.row.id)).toLocaleDateString() }}
                                 </p>
                               </div>
                               <footer class="card-footer">
@@ -46,8 +46,8 @@
                     </template>
                   </b-table>
                 </b-tab-item>
-                <b-tab-item label="Articles">
-                  <b-table :data="articles" :selected.sync="selected" @select="select" :loading="loading">
+                <b-tab-item label="文案">
+                  <b-table :data="articles" :selected.sync="selected" @select="select(row)" :loading="loading">
                     <template scope="props">
                         <b-table-column label="Title">
                             {{ props.row.title }}
@@ -62,28 +62,39 @@
                 
             </div>
 
-            <div class="column">
+            <div class="column" v-if="this.selected">
                 <h1 class="title">{{this.selected.title}}</h1>
                 <span>ArticleID: {{ this.selected.id }} / AuthorID: {{ this.selected.userId }}</span>
                 <hr/>
-                <article-show :article="this.selected.text"></article-show>
+                <div class="wrapper">
+                  <article-show :article="this.selected"></article-show>
+                  <checklist-display class="checklist-display" :article="this.selected"></checklist-display>
+                </div>
             </div>
         </div>
+        
+      <template slot="detail" slot-scope="props">
+        <textarea></textarea>
+      </template>
     </section>
 </template>
 
 <script>
 import { find } from "lodash";
 import ArticleShow from "@/components/ArticleShow";
+import ChecklistDisplay from "@/components/Checklist"
 import { mapState } from "vuex";
 export default {
   components: {
-    ArticleShow
+    ArticleShow,
+    ChecklistDisplay
   },
   computed: mapState(["articles"]),
   data() {
     const noData = {
-      text: "# Select an article to continue."
+      text: "",
+      title: 'not selected',
+      id: '0'
     };
     let selected = noData;
     let loading = true;
@@ -91,7 +102,8 @@ export default {
       activeTab: 0,
       noData,
       selected,
-      loading
+      loading,
+      defaultOpenedDetails: []
     };
   },
   mounted: function() {
@@ -135,10 +147,21 @@ export default {
           });
         });
     },
-    select: function() {
-      this.$router.push(`/article/${this.selected.id}`)
+    select: function(row) {
+      if(!this.selected) return;
+      this.$router.push(`/article/${row.id}`)
     }
     
   }
 };
 </script>
+
+<style>
+  .wrapper{
+    display:flex;
+  }
+  .checklist-display{
+    width:100%;
+    padding: 30px;
+  }
+</style>
